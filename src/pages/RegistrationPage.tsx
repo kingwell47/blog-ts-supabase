@@ -11,6 +11,7 @@ const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
 
   // Local States
+  const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [success, setSuccess] = useState<string | null>(null);
@@ -21,11 +22,13 @@ const RegistrationPage: React.FC = () => {
     dispatch(setError(null));
     setSuccess(null);
     try {
-      const { user } = await signUp(email, password);
-      dispatch(setUser(user));
+      const { user } = await signUp(email, password, displayName);
       setSuccess("Registration successful! Redirecting...");
       // delay navigation slightly to show the success message
-      setTimeout(() => navigate("/blogs"), 1500);
+      setTimeout(() => {
+        dispatch(setUser(user));
+        navigate("/blogs");
+      }, 1500);
     } catch (err: unknown) {
       let message = "Registration failed. Please try again.";
       if (err instanceof Error) {
@@ -41,6 +44,17 @@ const RegistrationPage: React.FC = () => {
     <div>
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="displayName">Display Name:</label>
+          <input
+            id="displayName"
+            type="text"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            required
+            className="input input-primary"
+          />
+        </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input

@@ -13,9 +13,10 @@ const NavBar: React.FC = () => {
   const handleLogout = async () => {
     try {
       await signOut();
-      setLogoutMessage("Logged out successfully! Redirecting...");
+      setLogoutMessage("Logged out successfully!");
       setTimeout(() => {
         dispatch(setUser(null));
+        setLogoutMessage(null);
         navigate("/login");
       }, 1500);
     } catch (error) {
@@ -25,12 +26,15 @@ const NavBar: React.FC = () => {
 
   if (!user && !logoutMessage) return null;
 
+  const displayName = user?.user_metadata.display_name;
+
   return (
     <nav>
       {logoutMessage && <p>{logoutMessage}</p>}
       {!logoutMessage && (
         <>
           <Link to="/blogs">Home</Link>
+          <p>{displayName ?? "Guest"}</p>
           <button onClick={handleLogout} className="btn btn-primary">
             Logout
           </button>
