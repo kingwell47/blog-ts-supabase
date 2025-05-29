@@ -33,8 +33,13 @@ const NavBar: React.FC = () => {
       {logoutMessage && <p>{logoutMessage}</p>}
       {!logoutMessage && (
         <>
-          <Link to="/blogs">Home</Link>
+          <Link to="/blogs" className="btn btn-primary">
+            Home
+          </Link>
           <p>{displayName ?? "Guest"}</p>
+          <Link to="/blogs/create" className="btn btn-primary">
+            New Blog
+          </Link>
           <button onClick={handleLogout} className="btn btn-primary">
             Logout
           </button>

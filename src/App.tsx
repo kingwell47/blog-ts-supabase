@@ -3,6 +3,7 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
+  Outlet,
   Navigate,
 } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "./store/store";
@@ -15,7 +16,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import BlogListPage from "./pages/BlogListPage";
 import NavBar from "./components/NavBar";
 import LoginPage from "./pages/LoginPage";
-/* CreateBlogPage */
+import CreateBlogPage from "./pages/CreateBlogPage";
 /* UpdateBlogPage */
 
 // PrivateRoute component to guard authenticated routes
@@ -72,10 +73,14 @@ const App: React.FC = () => {
           path="/blogs"
           element={
             <PrivateRoute>
-              <BlogListPage />
+              <Outlet />
             </PrivateRoute>
           }
-        />
+        >
+          <Route index element={<BlogListPage />} />
+          <Route path="create" element={<CreateBlogPage />} />
+        </Route>
+
         {/* Redirect any unknown route to blogs */}
         <Route path="*" element={<Navigate to="/blogs" replace />} />
       </Routes>
