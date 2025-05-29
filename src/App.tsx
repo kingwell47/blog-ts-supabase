@@ -17,6 +17,7 @@ import BlogListPage from "./pages/BlogListPage";
 import NavBar from "./components/NavBar";
 import LoginPage from "./pages/LoginPage";
 import CreateBlogPage from "./pages/CreateBlogPage";
+import BlogViewPage from "./pages/BlogViewPage";
 /* UpdateBlogPage */
 
 // PrivateRoute component to guard authenticated routes
@@ -79,6 +80,7 @@ const App: React.FC = () => {
         >
           <Route index element={<BlogListPage />} />
           <Route path="create" element={<CreateBlogPage />} />
+          <Route path=":id" element={<BlogViewPage />} />
         </Route>
 
         {/* Redirect any unknown route to blogs */}

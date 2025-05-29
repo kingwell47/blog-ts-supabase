@@ -53,7 +53,7 @@ const BlogListPage: React.FC = () => {
         <ul>
           {list.map((post) => (
             <li key={post.id}>
-              <Link to={`/blogs/${post.id}/edit`}>{post.title}</Link>
+              <Link to={`/blogs/${post.id}`}>{post.title}</Link>
               <p>{new Date(post.created_at).toLocaleDateString()}</p>
             </li>
           ))}
