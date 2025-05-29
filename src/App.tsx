@@ -12,13 +12,13 @@ import { setUser } from "./slices/authSlice";
 
 // Pages import
 import RegistrationPage from "./pages/RegistrationPage";
-/* LoginPage */
 import BlogListPage from "./pages/BlogListPage";
-import NavBar from "./components/NavBar";
 import LoginPage from "./pages/LoginPage";
 import CreateBlogPage from "./pages/CreateBlogPage";
 import BlogViewPage from "./pages/BlogViewPage";
-/* UpdateBlogPage */
+import UpdateBlogPage from "./pages/UpdateBlogPage";
+
+import NavBar from "./components/NavBar";
 
 // PrivateRoute component to guard authenticated routes
 const PrivateRoute: React.FC<{ children: React.ReactElement }> = ({
@@ -81,6 +81,7 @@ const App: React.FC = () => {
           <Route index element={<BlogListPage />} />
           <Route path="create" element={<CreateBlogPage />} />
           <Route path=":id" element={<BlogViewPage />} />
+          <Route path=":id/edit" element={<UpdateBlogPage />} />
         </Route>
 
         {/* Redirect any unknown route to blogs */}
