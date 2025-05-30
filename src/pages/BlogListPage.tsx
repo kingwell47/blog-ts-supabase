@@ -72,33 +72,53 @@ const BlogListPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Blog Posts</h1>
+    <div className="p-5">
+      <h1 className="text-center text-2xl font-bold">Blog Posts</h1>
       {isLoading && <p>Loading...</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!isLoading && !error && (
-        <ul>
+        <ul className="list bg-base-100 shadow-md">
           {list.map((post) => {
             const excerpt =
               post.content.length > EXCERPT_LENGTH
                 ? post.content.slice(0, EXCERPT_LENGTH) + "..."
                 : post.content;
+            const date = new Date(post.created_at);
+            const formatted = date.toLocaleString(undefined, {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+            });
             return (
-              <li key={post.id}>
-                <h2>
-                  <Link to={`/blogs/${post.id}`}>{post.title}</Link>
-                </h2>
-                <p style={{ fontStyle: "italic", margin: "0.25rem 0" }}>
-                  By {authorNames[post.id] || post.author_id}
-                </p>
-                <p style={{ fontStyle: "italic" }}>{excerpt}</p>
-                <small>{new Date(post.created_at).toLocaleDateString()}</small>
+              <li key={post.id} className="list-row">
+                <div className="card card-md bg-ghost text-primary-content w-full">
+                  <h2 className="card-title">{post.title}</h2>
+                  <p className="italic my-1">
+                    By {authorNames[post.id] || post.author_id}
+                  </p>
+                  <p>
+                    {excerpt}{" "}
+                    <Link
+                      to={`/blogs/${post.id}`}
+                      className="link text-secondary-content"
+                    >
+                      Read more
+                    </Link>
+                  </p>
+                  <small className="mt-0.5 italic">
+                    Posted on:{" "}
+                    <span className="text-secondary-content">{formatted}</span>
+                  </small>
+                </div>
               </li>
             );
           })}
         </ul>
       )}
-      <div>
+      <div className="flex items-center justify-between mt-2">
         <button
           onClick={handlePrev}
           disabled={page === 1}
