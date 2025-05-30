@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/store";
+import { supabase } from "../services/supabaseClient";
 import { fetchBlogs } from "../services/blogService";
 import {
   setBlogs,
@@ -9,11 +10,15 @@ import {
 } from "../slices/blogSlice";
 import { Link } from "react-router-dom";
 
+const EXCERPT_LENGTH = 100;
+
 const BlogListPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { list, page, pageSize, total, isLoading, error } = useAppSelector(
     (state) => state.blogs
   );
+  const [authorNames, setAuthorNames] = useState<Record<string, string>>({});
+
   // Calculate range for current page
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
@@ -37,6 +42,28 @@ const BlogListPage: React.FC = () => {
     load();
   }, [dispatch, from, to]);
 
+  // Fetch author names for each post
+  useEffect(() => {
+    async function loadAuthors() {
+      const names: Record<string, string> = {};
+      await Promise.all(
+        list.map(async (post) => {
+          const { data, error: profileError } = await supabase
+            .from("profiles")
+            .select("display_name")
+            .eq("id", post.author_id)
+            .single();
+          names[post.id] =
+            profileError || !data?.display_name
+              ? post.author_id
+              : data.display_name;
+        })
+      );
+      setAuthorNames(names);
+    }
+    if (list.length) loadAuthors();
+  }, [list]);
+
   const handlePrev = () => {
     if (page > 1) dispatch(setPage(page - 1));
   };
@@ -51,12 +78,24 @@ const BlogListPage: React.FC = () => {
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!isLoading && !error && (
         <ul>
-          {list.map((post) => (
-            <li key={post.id}>
-              <Link to={`/blogs/${post.id}`}>{post.title}</Link>
-              <p>{new Date(post.created_at).toLocaleDateString()}</p>
-            </li>
-          ))}
+          {list.map((post) => {
+            const excerpt =
+              post.content.length > EXCERPT_LENGTH
+                ? post.content.slice(0, EXCERPT_LENGTH) + "..."
+                : post.content;
+            return (
+              <li key={post.id}>
+                <h2>
+                  <Link to={`/blogs/${post.id}`}>{post.title}</Link>
+                </h2>
+                <p style={{ fontStyle: "italic", margin: "0.25rem 0" }}>
+                  By {authorNames[post.id] || post.author_id}
+                </p>
+                <p style={{ fontStyle: "italic" }}>{excerpt}</p>
+                <small>{new Date(post.created_at).toLocaleDateString()}</small>
+              </li>
+            );
+          })}
         </ul>
       )}
       <div>

@@ -3,7 +3,7 @@ import type { FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { setUser, setLoading, setError } from "../slices/authSlice";
 import { signIn } from "../services/authService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -45,6 +45,7 @@ const LoginPage: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="off"
             className="input input-primary"
           />
         </div>
@@ -56,6 +57,7 @@ const LoginPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            autoComplete="off"
             className="input input-primary"
           />
         </div>
@@ -64,6 +66,9 @@ const LoginPage: React.FC = () => {
           {isLoading ? "Logging in..." : "Login"}
         </button>
       </form>
+      <Link to="/register" className="link link-secondary">
+        Create an account here
+      </Link>
     </div>
   );
 };

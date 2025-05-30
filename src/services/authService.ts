@@ -17,6 +17,16 @@ export async function signUp(
     options: { data: { display_name: displayName } },
   });
   if (error) throw error;
+
+  // insert into profiles
+  if (data.user && displayName) {
+    const { error: profileError } = await supabase
+      .from("profiles")
+      .insert({ id: data.user.id, display_name: displayName });
+    if (profileError)
+      console.warn("Could not create profile:", profileError.message);
+  }
+
   return data;
 }
 

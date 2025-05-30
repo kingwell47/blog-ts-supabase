@@ -3,7 +3,7 @@ import type { FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { setUser, setLoading, setError } from "../slices/authSlice";
 import { signUp } from "../services/authService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const RegistrationPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -52,6 +52,7 @@ const RegistrationPage: React.FC = () => {
             value={displayName}
             onChange={(e) => setDisplayName(e.target.value)}
             required
+            autoComplete="off"
             className="input input-primary"
           />
         </div>
@@ -63,6 +64,7 @@ const RegistrationPage: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            autoComplete="off"
             className="input input-primary"
           />
         </div>
@@ -74,6 +76,7 @@ const RegistrationPage: React.FC = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            autoComplete="off"
             className="input input-primary"
           />
         </div>
@@ -83,6 +86,12 @@ const RegistrationPage: React.FC = () => {
           {isLoading ? "Registering..." : "Register"}
         </button>
       </form>
+      <span>
+        Already have an account?{" "}
+        <Link to="/login" className="link link-secondary">
+          Log-in
+        </Link>
+      </span>
     </div>
   );
 };
