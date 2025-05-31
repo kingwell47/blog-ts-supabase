@@ -77,45 +77,57 @@ const UpdateBlogPage: React.FC = () => {
   if (!currentPost) return <p>No blog found.</p>;
 
   return (
-    <div>
-      <h1>Edit Blog</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
+    <div className="md:w-5xl">
+      <form onSubmit={handleSubmit} className="card">
+        <h1 className="text-center text-2xl text-secondary-content">
+          Edit Blog
+        </h1>
+        <div className="card-body">
+          <label htmlFor="title" className="label">
+            Title:
+          </label>
           <input
             id="title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="input input-primary"
+            className="input w-full"
           />
-        </div>
-        <div>
-          <label htmlFor="content">Content:</label>
+
+          <label htmlFor="content" className="label">
+            Content:
+          </label>
           <textarea
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
             rows={10}
-            className="textarea textarea-primary"
+            className="textarea w-full"
           />
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn btn-primary"
+          >
+            {isLoading ? "Updating..." : "Update"}
+          </button>
+          <button
+            onClick={handleDelete}
+            disabled={isLoading}
+            className="btn btn-error text-primary-content"
+          >
+            Delete
+          </button>
+          <Link
+            to={currentPost ? `/blogs/${currentPost.id}` : "/blogs"}
+            className="btn btn-accent"
+          >
+            Cancel
+          </Link>
         </div>
-        <button type="submit" disabled={isLoading} className="btn btn-primary">
-          {isLoading ? "Updating..." : "Update"}
-        </button>
       </form>
-      <button
-        onClick={handleDelete}
-        disabled={isLoading}
-        className="btn btn-error"
-      >
-        Delete
-      </button>
-      <Link to={currentPost ? `/blogs/${currentPost.id}` : "/blogs"}>
-        Cancel
-      </Link>
     </div>
   );
 };
