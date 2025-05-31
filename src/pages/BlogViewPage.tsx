@@ -47,25 +47,54 @@ const BlogViewPage: React.FC = () => {
       .finally(() => dispatch(setBlogsLoading(false)));
   }, [dispatch, id]);
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <div className="p-5">
+        <div className="skeleton h-64 w-full" />
+      </div>
+    );
   if (error) return <p style={{ color: "red" }}>{error}</p>;
   if (!currentPost) return <p>No blog found.</p>;
 
+  // Check if current user is also the author
   const isAuthor = user?.id === currentPost.author_id;
+
+  const date = new Date(currentPost.created_at);
+  const formatted = date.toLocaleString(undefined, {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
   return (
-    <div>
-      <h1>{currentPost.title}</h1>
-      <p style={{ fontStyle: "italic", color: "#555", margin: "0.5rem 0" }}>
+    <div className="p-5">
+      <h1 className="text-center text-2xl text-primary-content">
+        {currentPost.title}
+      </h1>
+      <p className="text-center italic text-primary-content/50 my-1">
         By {authorName ?? currentPost.author_id}
       </p>
-      <p>{new Date(currentPost.created_at).toLocaleString()}</p>
-      <div>{currentPost.content}</div>
-      {isAuthor && (
-        <>
-          <Link to={`/blogs/${currentPost.id}/edit`}>Edit</Link> |{" "}
-        </>
-      )}
-      <Link to="/blogs">Back to list</Link>
+      <p className="text-center mb-1">{formatted}</p>
+      <div className="indent-10">{currentPost.content}</div>
+      <div className="text-center mt-2">
+        {isAuthor && (
+          <>
+            <Link
+              to={`/blogs/${currentPost.id}/edit`}
+              className="link text-lg text-primary-content/50"
+            >
+              Edit/Delete
+            </Link>{" "}
+            |{" "}
+          </>
+        )}
+        <Link to="/blogs" className="link text-lg text-primary-content/50">
+          Back to list
+        </Link>
+      </div>
     </div>
   );
 };

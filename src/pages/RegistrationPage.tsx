@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import type { FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { setUser, setLoading, setError } from "../slices/authSlice";
@@ -14,10 +14,31 @@ const RegistrationPage: React.FC = () => {
   const [displayName, setDisplayName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [success, setSuccess] = useState<string | null>(null);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [localError, setLocalError] = useState<string | null>(null);
+
+  // Enable register button only when all fields are filled and passwords match
+  useEffect(() => {
+    if (!email || !password || !confirmPassword || !displayName) {
+      setIsButtonDisabled(true);
+      setLocalError(null);
+    } else if (password !== confirmPassword) {
+      setIsButtonDisabled(true);
+      setLocalError("Passwords do not match.");
+    } else {
+      setIsButtonDisabled(false);
+      setLocalError(null);
+    }
+  }, [email, password, confirmPassword, displayName]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    // Extra check before submission
+    if (password !== confirmPassword) return;
+
     dispatch(setLoading(true));
     dispatch(setError(null));
     setSuccess(null);
@@ -41,11 +62,13 @@ const RegistrationPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="displayName">Display Name:</label>
+    <div className="p-5">
+      <form onSubmit={handleSubmit} className="card">
+        <h1 className="text-center text-2xl text-primary-content">Register</h1>
+        <div className="card-body">
+          <label htmlFor="displayName" className="label">
+            Display Name:
+          </label>
           <input
             id="displayName"
             type="text"
@@ -55,9 +78,10 @@ const RegistrationPage: React.FC = () => {
             autoComplete="off"
             className="input input-primary"
           />
-        </div>
-        <div>
-          <label htmlFor="email">Email:</label>
+
+          <label htmlFor="email" className="label">
+            Email:
+          </label>
           <input
             id="email"
             type="email"
@@ -67,9 +91,10 @@ const RegistrationPage: React.FC = () => {
             autoComplete="off"
             className="input input-primary"
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+
+          <label htmlFor="password" className="label">
+            Password:
+          </label>
           <input
             id="password"
             type="password"
@@ -79,19 +104,39 @@ const RegistrationPage: React.FC = () => {
             autoComplete="off"
             className="input input-primary"
           />
+
+          <label htmlFor="confirm" className="label">
+            Confirm Password:
+          </label>
+          <input
+            id="confirm"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+            autoComplete="off"
+            className="input input-primary"
+          />
+
+          {localError && <p className="text-error">{localError}</p>}
+          {error && <p className="text-error">{error}</p>}
+          {success && <p className="text-success">{success}</p>}
+
+          <button
+            type="submit"
+            disabled={isLoading || isButtonDisabled}
+            className="btn btn-primary"
+          >
+            {isLoading ? "Creating..." : "Create Account"}
+          </button>
+          <span className="text-center">
+            Already have an account?{" "}
+            <Link to="/login" className="link link-secondary">
+              Log-in
+            </Link>
+          </span>
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        {success && <p style={{ color: "green" }}>{success}</p>}
-        <button type="submit" disabled={isLoading} className="btn btn-primary">
-          {isLoading ? "Registering..." : "Register"}
-        </button>
       </form>
-      <span>
-        Already have an account?{" "}
-        <Link to="/login" className="link link-secondary">
-          Log-in
-        </Link>
-      </span>
     </div>
   );
 };

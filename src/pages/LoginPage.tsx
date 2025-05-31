@@ -34,11 +34,13 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
+    <div className="p-5">
+      <form onSubmit={handleSubmit} className="card">
+        <h1 className="text-center text-2xl text-primary-content">Login</h1>
+        <div className="card-body">
+          <label htmlFor="email" className="label">
+            Email:
+          </label>
           <input
             id="email"
             type="email"
@@ -46,11 +48,11 @@ const LoginPage: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="off"
-            className="input input-primary"
+            className="input"
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password" className="label">
+            Password:
+          </label>
           <input
             id="password"
             type="password"
@@ -58,17 +60,21 @@ const LoginPage: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="off"
-            className="input input-primary"
+            className="input"
           />
+          {error && <p className="text-error">{error}</p>}
+          <button
+            type="submit"
+            disabled={isLoading || !email || !password}
+            className="btn btn-primary"
+          >
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
+          <Link to="/register" className="link link-secondary text-center">
+            Create an account here
+          </Link>
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit" disabled={isLoading} className="btn btn-primary">
-          {isLoading ? "Logging in..." : "Login"}
-        </button>
       </form>
-      <Link to="/register" className="link link-secondary">
-        Create an account here
-      </Link>
     </div>
   );
 };

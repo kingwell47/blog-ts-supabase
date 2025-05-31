@@ -74,7 +74,7 @@ const BlogListPage: React.FC = () => {
   return (
     <div className="p-5">
       <h1 className="text-center text-2xl font-bold">Blog Posts</h1>
-      {isLoading && <p>Loading...</p>}
+      {isLoading && <div className="skeleton h-32 w-full my-2" />}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!isLoading && !error && (
         <ul className="list bg-base-100 shadow-md">
@@ -126,7 +126,7 @@ const BlogListPage: React.FC = () => {
         >
           Previous
         </button>
-        <span>
+        <span className="text-sm text-secondary-content">
           Page {page} of {totalPages}
         </span>
         <button

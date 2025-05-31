@@ -3,7 +3,7 @@ import type { FormEvent } from "react";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import { setBlogsLoading, setBlogsError } from "../slices/blogSlice";
 import { createBlog } from "../services/blogService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const CreateBlogPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -31,35 +31,48 @@ const CreateBlogPage: React.FC = () => {
   };
 
   return (
-    <div>
-      <h1>Create New Blog</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
+    <div className="p-5">
+      <form onSubmit={handleSubmit} className="card">
+        <h1 className="text-center text-2xl text-secondary-content">
+          Create New Post
+        </h1>
+        <div className="card-body">
+          <label htmlFor="title" className="label">
+            Title:
+          </label>
           <input
             id="title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="input input-primary"
+            className="input"
           />
-        </div>
-        <div>
-          <label htmlFor="content">Content:</label>
+          <label htmlFor="content" className="label">
+            Content:
+          </label>
           <textarea
             id="content"
             value={content}
             onChange={(e) => setContent(e.target.value)}
             required
             rows={10}
-            className="textarea textarea-primary"
+            className="textarea"
           />
+          <div className="card-actions flex justify-between">
+            {error && <p className="text-error">{error}</p>}
+            <button
+              type="submit"
+              disabled={isLoading || !title || !content}
+              className="btn btn-primary"
+            >
+              {isLoading ? "Creating..." : "Create"}
+            </button>
+            <Link to="/blog" className="btn btn-error text-secondary-content">
+              Cancel
+            </Link>
+          </div>
         </div>
-        {error && <p style={{ color: "red" }}>{error}</p>}
-        <button type="submit" disabled={isLoading} className="btn btn-primary">
-          {isLoading ? "Creating..." : "Create"}
-        </button>
       </form>
     </div>
   );
