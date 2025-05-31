@@ -159,7 +159,7 @@ src/
 
 3. **Create a new blog post**
 
-   - Click “New Blog” in the navigation bar.
+   - Click “New Blog” icon in the navigation bar.
    - Enter a Title and Content, then click **Create** to save.
    - You’ll be redirected back to the list where your post appears.
 
@@ -222,15 +222,3 @@ You can deploy this project to any static hosting service (e.g., Vercel, Netlify
 
 - `VITE_SUPABASE_URL` – Your Supabase project URL (e.g., `https://xyz.supabase.co`)
 - `VITE_SUPABASE_ANON_KEY` – Your Supabase anon public API key
-
-## Contributing
-
-1. Fork this repository
-2. Create a feature branch (`git checkout -b feature/YourFeature`)
-3. Commit your changes (`git commit -m "Add some feature"`)
-4. Push to the branch (`git push origin feature/YourFeature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License.

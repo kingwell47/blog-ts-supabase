@@ -50,6 +50,12 @@ const NavBar: React.FC = () => {
 
   const displayName = user?.user_metadata.display_name;
 
+  const confirmAndLogout = () => {
+    if (window.confirm("Are you sure you want to log out?")) {
+      handleLogout();
+    }
+  };
+
   return (
     <nav className="navbar bg-base-100 shadow-sm">
       <div className="navbar-start">
@@ -66,7 +72,10 @@ const NavBar: React.FC = () => {
             <Link to="/blogs/create" className="btn btn-ghost btn-circle">
               <AddPostIcon />
             </Link>
-            <button onClick={handleLogout} className="btn btn-ghost btn-circle">
+            <button
+              onClick={confirmAndLogout}
+              className="btn btn-ghost btn-circle"
+            >
               <LogOutIcon />
             </button>
           </>
