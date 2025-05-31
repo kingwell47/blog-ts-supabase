@@ -62,6 +62,7 @@ const LoginPage: React.FC = () => {
             autoComplete="off"
             className="input w-full"
           />
+          {error && <p className="text-error">{error}</p>}
           <button
             type="submit"
             disabled={isLoading || !email || !password}
