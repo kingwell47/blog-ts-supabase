@@ -50,43 +50,45 @@ const App: React.FC = () => {
   return (
     <Router>
       <NavBar />
-      <Routes>
-        {/* Public Routes */}
-        <Route
-          path="/register"
-          element={
-            <PublicRoute>
-              <RegistrationPage />
-            </PublicRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <PublicRoute>
-              <LoginPage />
-            </PublicRoute>
-          }
-        />
+      <div className="p-5 md:flex md:flex-col md:items-center md:justify-center">
+        <Routes>
+          {/* Public Routes */}
+          <Route
+            path="/register"
+            element={
+              <PublicRoute>
+                <RegistrationPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <PublicRoute>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
 
-        {/* Protected Routes */}
-        <Route
-          path="/blogs"
-          element={
-            <PrivateRoute>
-              <Outlet />
-            </PrivateRoute>
-          }
-        >
-          <Route index element={<BlogListPage />} />
-          <Route path="create" element={<CreateBlogPage />} />
-          <Route path=":id" element={<BlogViewPage />} />
-          <Route path=":id/edit" element={<UpdateBlogPage />} />
-        </Route>
+          {/* Protected Routes */}
+          <Route
+            path="/blogs"
+            element={
+              <PrivateRoute>
+                <Outlet />
+              </PrivateRoute>
+            }
+          >
+            <Route index element={<BlogListPage />} />
+            <Route path="create" element={<CreateBlogPage />} />
+            <Route path=":id" element={<BlogViewPage />} />
+            <Route path=":id/edit" element={<UpdateBlogPage />} />
+          </Route>
 
-        {/* Redirect any unknown route to blogs */}
-        <Route path="*" element={<Navigate to="/blogs" replace />} />
-      </Routes>
+          {/* Redirect any unknown route to blogs */}
+          <Route path="*" element={<Navigate to="/blogs" replace />} />
+        </Routes>
+      </div>
     </Router>
   );
 };

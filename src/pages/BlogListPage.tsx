@@ -10,7 +10,7 @@ import {
 } from "../slices/blogSlice";
 import { Link } from "react-router-dom";
 
-const EXCERPT_LENGTH = 100;
+const EXCERPT_LENGTH = 200;
 
 const BlogListPage: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -72,7 +72,7 @@ const BlogListPage: React.FC = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="md:w-5xl">
       <h1 className="text-center text-2xl font-bold">Blog Posts</h1>
       {isLoading && <div className="skeleton h-32 w-full my-2" />}
       {error && <p style={{ color: "red" }}>{error}</p>}

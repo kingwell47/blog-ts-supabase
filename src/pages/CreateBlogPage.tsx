@@ -31,7 +31,7 @@ const CreateBlogPage: React.FC = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="md:w-5xl">
       <form onSubmit={handleSubmit} className="card">
         <h1 className="text-center text-2xl text-secondary-content">
           Create New Post
@@ -46,7 +46,7 @@ const CreateBlogPage: React.FC = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="input"
+            className="input w-full"
           />
           <label htmlFor="content" className="label">
             Content:
@@ -57,7 +57,7 @@ const CreateBlogPage: React.FC = () => {
             onChange={(e) => setContent(e.target.value)}
             required
             rows={10}
-            className="textarea"
+            className="textarea w-full"
           />
           <div className="card-actions flex justify-between">
             {error && <p className="text-error">{error}</p>}

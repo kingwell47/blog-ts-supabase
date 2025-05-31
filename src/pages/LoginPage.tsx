@@ -34,7 +34,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="md:w-3xl">
       <form onSubmit={handleSubmit} className="card">
         <h1 className="text-center text-2xl text-primary-content">Login</h1>
         <div className="card-body">
@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="off"
-            className="input"
+            className="input w-full"
           />
           <label htmlFor="password" className="label">
             Password:
@@ -60,13 +60,12 @@ const LoginPage: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="off"
-            className="input"
+            className="input w-full"
           />
-          {error && <p className="text-error">{error}</p>}
           <button
             type="submit"
             disabled={isLoading || !email || !password}
-            className="btn btn-primary"
+            className="btn btn-primary w-full"
           >
             {isLoading ? "Logging in..." : "Login"}
           </button>

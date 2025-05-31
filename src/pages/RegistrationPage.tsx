@@ -62,7 +62,7 @@ const RegistrationPage: React.FC = () => {
   };
 
   return (
-    <div className="p-5">
+    <div className="md:w-3xl">
       <form onSubmit={handleSubmit} className="card">
         <h1 className="text-center text-2xl text-primary-content">Register</h1>
         <div className="card-body">
@@ -76,7 +76,7 @@ const RegistrationPage: React.FC = () => {
             onChange={(e) => setDisplayName(e.target.value)}
             required
             autoComplete="off"
-            className="input input-primary"
+            className="input w-full"
           />
 
           <label htmlFor="email" className="label">
@@ -89,7 +89,7 @@ const RegistrationPage: React.FC = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
             autoComplete="off"
-            className="input input-primary"
+            className="input w-full"
           />
 
           <label htmlFor="password" className="label">
@@ -102,7 +102,7 @@ const RegistrationPage: React.FC = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
             autoComplete="off"
-            className="input input-primary"
+            className="input w-full"
           />
 
           <label htmlFor="confirm" className="label">
@@ -115,7 +115,7 @@ const RegistrationPage: React.FC = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
             autoComplete="off"
-            className="input input-primary"
+            className="input w-full"
           />
 
           {localError && <p className="text-error">{localError}</p>}

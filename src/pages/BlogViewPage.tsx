@@ -47,13 +47,8 @@ const BlogViewPage: React.FC = () => {
       .finally(() => dispatch(setBlogsLoading(false)));
   }, [dispatch, id]);
 
-  if (isLoading)
-    return (
-      <div className="p-5">
-        <div className="skeleton h-64 w-full" />
-      </div>
-    );
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (isLoading) return <div className="skeleton h-64 w-full md:w-5xl" />;
+  if (error) return <p className="text-error">{error}</p>;
   if (!currentPost) return <p>No blog found.</p>;
 
   // Check if current user is also the author
@@ -70,7 +65,7 @@ const BlogViewPage: React.FC = () => {
   });
 
   return (
-    <div className="p-5">
+    <div className="md:w-5xl">
       <h1 className="text-center text-2xl text-primary-content">
         {currentPost.title}
       </h1>
