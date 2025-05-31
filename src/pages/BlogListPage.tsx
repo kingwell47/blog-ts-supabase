@@ -73,7 +73,12 @@ const BlogListPage: React.FC = () => {
 
   return (
     <div className="md:w-5xl">
-      <h1 className="text-center text-2xl font-bold">Blog Posts</h1>
+      <div className="flex flex-col items-center justify-center gap-1">
+        <h1 className="text-center text-2xl font-bold">Blog Posts</h1>
+        <Link to="/blogs/create" className="btn btn-info btn-sm text-base-300">
+          Create new post
+        </Link>
+      </div>
       {isLoading && <div className="skeleton h-32 w-full my-2" />}
       {error && <p style={{ color: "red" }}>{error}</p>}
       {!isLoading && !error && (
